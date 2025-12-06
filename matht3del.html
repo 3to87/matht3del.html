@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المتطابقات المثلثية — نسخة مبسطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --accent:#0ea5ff;
+  --accent-2:#2563eb;
+  --bg:linear-gradient(180deg,#071025 0%,#07243d 100%);
+  --card-bg:rgba(255,255,255,0.06);
+  --glass:rgba(255,255,255,0.04);
+  --text:#e6f0ff;
+  --muted:#9fb5d6;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Almarai',Tahoma,sans-serif;background:var(--bg);color:var(--text);}
+.container{max-width:1100px;margin:30px auto;padding:22px;opacity:0;pointer-events:none;transition:opacity .5s;}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(2,6,23,0.5)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(10,30,60,0.35)}
+.logo svg{width:36px;height:36px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.25))}
+h1{font-size:20px;margin:0}
+.subtitle{font-size:12px;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:22px}
+.hero-left{display:flex;justify-content:center;align-items:center} /* الجهة اليسرى */
+.unit-circle{max-width:100%;height:auto;border:2px solid var(--accent);border-radius:50%} /* الدائرة */
+.hero-card{padding:26px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 10px 30px rgba(2,6,23,0.45)}
+.hero h2{font-size:34px;margin:0 0 8px}
+.hero p{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.card{padding:18px;border-radius:12px;background:var(--card-bg);backdrop-filter: blur(6px);min-height:120px;display:flex;flex-direction:column;gap:10px;justify-content:space-between;transition:transform .22s,box-shadow .22s;cursor:pointer}
+.card:hover{transform:translateY(-10px);box-shadow:0 18px 40px rgba(8,20,45,0.6)}
+.card .title{font-weight:800}
+.card .desc{font-size:13px;color:var(--muted)}
+.content-area{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);min-height:200px}
+footer{margin-top:30px;padding:14px;border-radius:10px;text-align:center;color:var(--muted)}
+.modal-bg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(2,6,23,0.8),rgba(2,6,23,0.8));z-index:50}
+.modal{width:360px;padding:20px;border-radius:12px;background:var(--card-bg);box-shadow:0 12px 40px rgba(2,6,23,0.6)}
+.input{width:100%;padding:12px;border-radius:8px;border:none;background:var(--glass);color:var(--text);font-size:15px}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+<header>
+  <div class="brand">
+    <div class="logo" aria-hidden>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 20h18L12 4 3 20z" fill="white" opacity="0.95"/></svg>
+    </div>
+    <div>
+      <h1>المتطابقات المثلثية</h1>
+      <div class="subtitle">عرض القوانين كاملة لكل نوع</div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <!-- الجهة اليسرى لدائرة الوحدة -->
+  <div class="hero-left">
+    <img src="https://math2acom.files.wordpress.com/2018/03/unnamed.png" alt="دائرة الوحدة" class="unit-circle">
+  </div>
+
+  <!-- الكارتات على الجهة اليمنى -->
+  <div class="hero-card">
+    <h2>واجهة تفاعلية للقوانين</h2>
+    <p>اضغط على أي قائمة لعرض جميع القوانين المرتبطة بها.</p>
+    <div class="grid">
+      <div class="card" onclick="showLaws('relative')">
+        <div class="title">المتطابقات النسبية</div>
+        <div class="desc">sin, cos, tan وخصائصها</div>
+      </div>
+      <div class="card" onclick="showLaws('reciprocal')">
+        <div class="title">متطابقات المقلوب</div>
+        <div class="desc">csc, sec, cot وخواصها</div>
+      </div>
+      <div class="card" onclick="showLaws('pythagoras')">
+        <div class="title">متطابقات فيثاغورس</div>
+        <div class="desc">معادلات تربط بين المربعات</div>
+      </div>
+      <div class="card" onclick="showLaws('complementary')">
+        <div class="title">الزاويتان المتتامتان</div>
+        <div class="desc">sin(90-x) = cos x</div>
+      </div>
+      <div class="card" onclick="showLaws('parity')">
+        <div class="title">زوجية/فردية الدوال</div>
+        <div class="desc">خواص الدوال بالنسبة للمحور</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="content-area" id="content"></main>
+<footer>To teacher Munir Al-Ja'id</footer>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3>تسجيل دخول</h3>
+    <input id="pwInput" class="input" type="password" placeholder="كلمة المرور" />
+    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+      <button class="btn" id="submitPw">دخول</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const container=document.getElementById('app');
+const modalBg=document.getElementById('modalBg');
+const submitPw=document.getElementById('submitPw');
+const content=document.getElementById('content');
+
+const laws = {
+  relative: `\\[ \\tan x = \\frac{\\sin x}{\\cos x}, \\quad \\cot x = \\frac{1}{\\tan x} \\]`,
+  reciprocal: `\\[ \\csc x = \\frac{1}{\\sin x}, \\quad \\sec x = \\frac{1}{\\cos x}, \\quad \\cot x = \\frac{1}{\\tan x} \\]`,
+  pythagoras: `\\[ \\sin^2 x + \\cos^2 x = 1, \\quad 1 + \\tan^2 x = \\sec^2 x, \\quad 1 + \\cot^2 x = \\csc^2 x \\]`,
+  complementary: `\\[ \\sin(90^\\circ - x) = \\cos x, \\quad \\cos(90^\\circ - x) = \\sin x \\]`,
+  parity: `\\[ \\sin(-x) = -\\sin x \\quad (فردية), \\quad \\cos(-x) = \\cos x \\quad (زوجية) \\]`
+};
+
+function showLaws(section){
+  content.innerHTML = '<h2>'+section+'</h2>' + laws[section];
+  MathJax.typesetPromise();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// تحقق كلمة المرور
+if(localStorage.getItem('loggedIn')==='1'){container.style.opacity=1; container.style.pointerEvents='auto'; modalBg.style.display='none';}
+submitPw.addEventListener('click',()=>{
+  const pw=document.getElementById('pwInput').value;
+  if(pw==='hmm'){localStorage.setItem('loggedIn','1');modalBg.style.display='none';container.style.opacity=1;container.style.pointerEvents='auto';}
+  else alert('كلمة المرور غير صحيحة');
+});
+</script>
+</body>
+</html>
